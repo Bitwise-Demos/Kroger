@@ -3,7 +3,8 @@ name: Deploy Databricks Notebook
 on:
   push:
     branches:
-      - main
+      - develop
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -28,7 +29,8 @@ jobs:
         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
       run: |
-        databricks configure --token <<< "${{ secrets.DATABRICKS_HOST }}\n${{ secrets.DATABRICKS_TOKEN }}"
+        mkdir -p ~/.databricks
+        echo -e "[DEFAULT]\nhost = $DATABRICKS_HOST\ntoken = $DATABRICKS_TOKEN" > ~/.databricks/config
 
     - name: Deploy Notebook to Databricks
       env:
