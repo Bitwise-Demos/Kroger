@@ -3,7 +3,7 @@ name: Deploy Databricks Notebook
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
