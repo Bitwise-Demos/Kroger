@@ -42,4 +42,4 @@ jobs:
         NOTEBOOK_PATH: 'Notebook/Test-Notebook.py'
       run: |
         databricks workspace mkdirs $DATABRICKS_WORKSPACE_DIR
-        databricks workspace import $NOTEBOOK_PATH $DATABRICKS_WORKSPACE_DIR/notebook.py -l PYTHON
+        databricks workspace import $NOTEBOOK_PATH $DATABRICKS_WORKSPACE_DIR/Test-Notebook.py -l PYTHON
