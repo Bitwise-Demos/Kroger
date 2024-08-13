@@ -34,11 +34,6 @@ jobs:
         echo "host = $DATABRICKS_HOST" >> ~/.databricks/config
         echo "token = $DATABRICKS_TOKEN" >> ~/.databricks/config
 
-    - name: Validate Databricks Configuration
-      run: |
-        cat ~/.databricks/config
-        databricks workspace list
-
     - name: Deploy Notebook to Databricks
       env:
         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
