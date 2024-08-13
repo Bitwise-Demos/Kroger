@@ -3,8 +3,8 @@ name: Deploy Databricks Notebook
 on:
   push:
     branches:
-      - develop
-  workflow_dispatch:
+      - main
+  workflow_dispatch:  # This allows manual triggering
 
 jobs:
   deploy:
@@ -30,10 +30,19 @@ jobs:
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
       run: |
         mkdir -p ~/.databricks
-        echo -e "[DEFAULT]\nhost = $DATABRICKS_HOST\ntoken = $DATABRICKS_TOKEN" > ~/.databricks/config
+        echo "[DEFAULT]" > ~/.databricks/config
+        echo "host = $DATABRICKS_HOST" >> ~/.databricks/config
+        echo "token = $DATABRICKS_TOKEN" >> ~/.databricks/config
+
+    - name: Validate Databricks Configuration
+      run: |
+        cat ~/.databricks/config
+        databricks workspace list
 
     - name: Deploy Notebook to Databricks
       env:
+        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         DATABRICKS_WORKSPACE_DIR: '/Workspace/YourProject'
         NOTEBOOK_PATH: 'path/to/your/notebook.py'
       run: |
