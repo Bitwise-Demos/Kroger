@@ -38,8 +38,8 @@ jobs:
       env:
         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        DATABRICKS_WORKSPACE_DIR: '/Workspace/YourProject'
+        DATABRICKS_WORKSPACE_DIR: '/Workspace/NewProject'
         NOTEBOOK_PATH: 'Notebook/Test-Notebook.py'
       run: |
         databricks workspace mkdirs $DATABRICKS_WORKSPACE_DIR
-        databricks workspace import $NOTEBOOK_PATH $DATABRICKS_WORKSPACE_DIR/notebook.py -l PYTHON
+        databricks workspace import $NOTEBOOK_PATH $DATABRICKS_WORKSPACE_DIR/sample-1.ipynb -l PYTHON
