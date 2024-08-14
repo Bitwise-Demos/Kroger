@@ -1,9 +1,6 @@
 name: Deploy Databricks Notebook
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:  # This allows manual triggering
 
 jobs:
@@ -38,8 +35,10 @@ jobs:
       env:
         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        DATABRICKS_WORKSPACE_DIR: '/Workspace/NewProject'
-        NOTEBOOK_PATH: 'Notebook/Test-Notebook.py'
+        DATABRICKS_WORKSPACE_DIR: '/Workspace/KrgProject'
+        NOTEBOOK_PATH: 'Notebook/sample-1.ipynb'
       run: |
-        databricks workspace mkdirs $DATABRICKS_WORKSPACE_DIR
-        databricks workspace import $NOTEBOOK_PATH $DATABRICKS_WORKSPACE_DIR/sample-1.ipynb -l PYTHON
+        if ! databricks workspace ls $DATABRICKS_WORKSPACE_DIR; then
+          databricks workspace mkdirs $DATABRICKS_WORKSPACE_DIR
+        fi
+        databricks workspace import --overwrite $NOTEBOOK_PATH $DATABRICKS_WORKSPACE_DIR/sample-1.ipynb -l PYTHON
